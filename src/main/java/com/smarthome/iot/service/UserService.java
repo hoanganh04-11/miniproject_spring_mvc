@@ -9,29 +9,32 @@ import com.smarthome.iot.repository.UserRepository;
 
 @Service
 public class UserService {
-    
+
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return this.userRepository.findAll();
     }
 
-    public List<User> getAllUsersByEmail(String email){
+    public List<User> getAllUsersByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 
-    public User getUserById(long id){
+    public User getUserById(long id) {
         return this.userRepository.findById(id);
     }
 
-    public User handleSaveUser(User user){
+    public User handleSaveUser(User user) {
         User eric = this.userRepository.save(user);
         System.out.println(eric);
         return eric;
     }
 
+    public void deleteAUser(long id){
+        this.userRepository.deleteById(id);
+    }
 }
