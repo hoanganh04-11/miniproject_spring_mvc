@@ -30,6 +30,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    
     public long getId() {
         return id;
     }
@@ -67,7 +68,13 @@ public class User {
         this.phone = phone;
     }
     
-    
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -81,6 +88,5 @@ public class User {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
                 + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
-    
     
 }
