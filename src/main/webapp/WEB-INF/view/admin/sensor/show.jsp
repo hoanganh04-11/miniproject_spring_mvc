@@ -26,8 +26,49 @@
                                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Sensors</li>
                             </ol>
-                            <div>
-                                table sensor
+                            <div class="container mt-5">
+                                <div class="row">
+                                    <div class="col-12 mx-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h3>Table Sensor</h3>
+                                            <a href="sensor/create" class="btn btn-primary">Create Sensor</a>
+                                        </div>
+                            
+                                        <hr />
+                                        <table class="table table-bordered table-hover">
+                                            <thread>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Type</th>
+                                                    <th>Threshold</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thread>
+                                            <tbody>
+                                                <c:forEach var="sensor" items="${sensors}">
+                                                    <tr>
+                                                        <th>${sensor.id}</th>
+                                                        <td>${sensor.name}</td>
+                                                        <td>${sensor.type}</td>
+                                                        <td>${sensor.threshold}</td>
+                                                        <td>${sensor.status}</td>
+                                                        <td>${sensor.room.name}</td>
+                                                        <td>
+                                                            <a href="/admin/sensor/${sensor.id}" class="btn btn-success">View</a>
+                                                            <a href="/admin/sensor/update/${sensor.id}" class="btn btn-warning">Update</a>
+                                                            <a href="/admin/sensor/delete/${sensor.id}" class="btn btn-danger">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                            
+                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            
+                                </div>
+                            
                             </div>
                         </div>
                     </main>

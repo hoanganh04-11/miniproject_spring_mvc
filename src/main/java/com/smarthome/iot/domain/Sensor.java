@@ -16,6 +16,7 @@ public class Sensor {
     private long id;
 
     private String name;
+    private String type;
     private double threshold;
     private String status;
     // roomId
@@ -24,6 +25,12 @@ public class Sensor {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
     public long getId() {
         return id;
     }
@@ -50,10 +57,10 @@ public class Sensor {
     }
     @Override
     public String toString() {
-        return "Sensor [id=" + id + ", name=" + name + ", threshold=" + threshold + ", status=" + status + "]";
+        return "Sensor [id=" + id + ", name=" + name + ", type=" + type + ", threshold=" + threshold + ", status="
+                + status + ", room=" + room + "]";
     }
     
     
-
     
 }
