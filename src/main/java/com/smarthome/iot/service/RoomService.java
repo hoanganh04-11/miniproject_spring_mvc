@@ -23,4 +23,8 @@ public class RoomService {
     public Room findById(Long id) {
         return this.roomRepository.findById(id).orElse(null);
     }
+
+    public Room createRoom(Room room){
+        return this.roomRepository.save(room);
+    }
 }

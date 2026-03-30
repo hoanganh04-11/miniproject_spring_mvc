@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/{id}")
-    public String getUserDetailPage(Model model, @PathVariable long id) {
+    public String getUserDetailPage(Model model, @PathVariable Long id) {
         User user = this.userService.getUserById(id);
         model.addAttribute("id", id);
         model.addAttribute("user", user);
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/update/{id}")
-    public String getUpdateUserPage(Model model, @PathVariable long id) {
+    public String getUpdateUserPage(Model model, @PathVariable Long id) {
         User currentUser = this.userService.getUserById(id);
         model.addAttribute("newUser", currentUser);
         return "admin/user/update";
@@ -102,7 +102,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/delete/{id}")
-    public String getDeleteUserPage(Model model, @PathVariable long id) {
+    public String getDeleteUserPage(Model model, @PathVariable Long id) {
         model.addAttribute("id", id);
         // User user = new User();
         // user.setId(id);

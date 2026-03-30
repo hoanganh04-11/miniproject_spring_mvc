@@ -20,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
@@ -45,7 +45,7 @@ public class User {
     private Role role;
 
     
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public String getEmail() {
@@ -63,7 +63,7 @@ public class User {
     public String getPhone() {
         return phone;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public void setEmail(String email) {

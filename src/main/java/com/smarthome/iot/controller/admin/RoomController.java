@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.smarthome.iot.domain.Room;
 import com.smarthome.iot.domain.Sensor;
@@ -24,6 +26,18 @@ public class RoomController {
     public String getRoomPage(Model model){
         List<Room> rooms = this.roomService.getAllRoom();
         model.addAttribute("rooms", rooms);
-        return "admin/room/show";
+        return "/admin/room/show";
+    }
+
+    @GetMapping("/admin/room/create")
+    public String getRoomCreatePage(Model model){
+        model.addAttribute("newRoom", new Room());
+        return "/admin/room/create";
+    }
+
+    @PostMapping("/admin/room/create")
+    public String postRoomCreate(Model model, @ModelAttribute("newRoom") Room room){
+        this.roomService.createRoom(room);
+        return "redirect:/admin/room";
     }
 }

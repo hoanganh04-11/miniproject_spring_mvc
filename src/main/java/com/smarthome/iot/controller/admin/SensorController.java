@@ -48,18 +48,27 @@ public class SensorController {
     }
     
     @PostMapping("/admin/sensor/create")
-    public String postSensorCreate(Model model, 
-                                    @ModelAttribute("newSensor") @Valid Sensor sensor, BindingResult newSensorBindingResult,
-                                    @RequestParam("roomId") Long roomId){
-        if(newSensorBindingResult.hasErrors()){
-            return "/admin/sensor/create";
+    public String postSensorCreate(Model model,
+            @ModelAttribute("newSensor") @Valid Sensor sensor,
+            BindingResult newSensorBindingResult) {
+
+        List<Room> rooms = this.roomService.getAllRoom();
+        model.addAttribute("rooms", rooms);
+
+        if (newSensorBindingResult.hasErrors()) {
+            return "admin/sensor/create";
         }
 
-        Room room = this.roomService.findById(roomId);
-        sensor.setRoom(room);
+        Long roomId = sensor.getRoom().getId();
+        sensor.setRoom(this.roomService.findById(roomId));
+
         this.sensorService.createSensor(sensor);
-        return "redirect:/admin/sensor/create";
+
+        return "redirect:/admin/sensor";
     }
 
-
+    @GetMapping("/admin/sensor/{id}")
+    public String getSensorDetailPage(Model model){
+        return "/admin/sensor/detail";
+    }
 }

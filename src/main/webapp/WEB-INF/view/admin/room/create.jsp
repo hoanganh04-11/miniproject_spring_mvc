@@ -37,14 +37,14 @@
                                         <div class="col-md-6 col-12 mx-auto">
                                             <h3>Thêm mới một phòngn</h3>
                                             <hr />
-                                            <form:form method="post" action="/admin/sensor/create"
-                                                modelAttribute="newSensor" class="row" enctype="multipart/form-data">
+                                            <form:form method="post" action="/admin/room/create"
+                                                modelAttribute="newRoom" class="row" enctype="multipart/form-data">
 
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <c:set var="errorName">
                                                         <form:errors path="name" cssClass="invalid-feedback" />
                                                     </c:set>
-                                                    <label class="form-label">Tên cảm biến:</label>
+                                                    <label class="form-label">Tên phòng:</label>
                                                     <form:input type="text"
                                                         class="form-control ${not empty errorName ? 'is-invalid' : ''}"
                                                         path="name" />
@@ -52,46 +52,8 @@
                                                 </div>
 
 
-                                                <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Loại cảm biến:</label>
-                                                    <form:select class="form-select" path="type" required="required">
-                                                        <form:option value="TEMPERATURE">Nhiệt độ</form:option>
-                                                        <form:option value="LIGHT">Ánh sáng</form:option>
-                                                        <form:option value="MOTION">Chuyển động</form:option>
-                                                        <form:option value="GAS">Khí Gas</form:option>
-                                                        <form:option value="SMOKE">Khói</form:option>
-                                                    </form:select>
-                                                </div>
+                                                
 
-                                                <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Status:</label>
-                                                    <form:select class="form-select" path="status" required="required">
-                                                        <form:option value="ON">ON</form:option>
-                                                        <form:option value="OFF">OFF</form:option>
-                                                    </form:select>
-                                                </div>
-
-
-                                                <div class="mb-3 col-12 col-md-6">
-                                                    <label class="form-label">Phòng:</label>
-                                                    <form:select class="form-select" path="room.id" required="required">
-                                                        <form:option value="">-- Chọn phòng --</form:option>
-                                                        <c:forEach var="room" items="${rooms}">
-                                                            <form:option value="${room.id}">${room.name}</form:option>
-                                                        </c:forEach>
-                                                    </form:select>
-                                                </div>
-
-                                                <div class="mb-3 col-12 col-md-6">
-                                                    <c:set var="errorThreshold">
-                                                        <form:errors path="threshold" cssClass="invalid-feedback" />
-                                                    </c:set>
-                                                    <label class="form-label">Ngưỡng cảnh báo:</label>
-                                                    <form:input type="number"
-                                                        class="form-control ${not empty errorThreshold ? 'is-invalid' : ''}"
-                                                        path="threshold" />
-                                                    ${errorThreshold}
-                                                </div>
 
                                                 <div class="col-12 mb-5">
                                                     <button type="submit" class="btn btn-primary">Tạo mới</button>

@@ -30,8 +30,8 @@ public class UserService {
         return this.userRepository.findByEmail(email);
     }
 
-    public User getUserById(long id) {
-        return this.userRepository.findById(id);
+    public User getUserById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
     }
 
     public User handleSaveUser(User user) {
@@ -40,7 +40,7 @@ public class UserService {
         return eric;
     }
 
-    public void deleteAUser(long id){
+    public void deleteAUser(Long id){
         this.userRepository.deleteById(id);
     }
 

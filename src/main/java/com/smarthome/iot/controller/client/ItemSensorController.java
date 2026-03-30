@@ -11,7 +11,7 @@ public class ItemSensorController {
     
 
     @GetMapping("sensor/{id}")
-    public String getClientSensorPage(Model model, @PathVariable long id){
+    public String getClientSensorPage(Model model, @PathVariable Long id){
         return "client/sensor/detail";
     }
 

@@ -50,8 +50,8 @@
                                             <tbody>
                                                 <c:forEach var="room" items="${rooms}">
                                                     <tr>
-                                                        <th>${sensor.id}</th>
-                                                        <td>${sensor.name}</td>
+                                                        <th>${room.id}</th>
+                                                        <td>${room.name}</td>
                                                         <td>
                                                             <a href="/admin/room/${sensor.id}"
                                                                 class="btn btn-success">View</a>
