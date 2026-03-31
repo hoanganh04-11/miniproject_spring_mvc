@@ -1,5 +1,8 @@
 package com.smarthome.iot.domain.dto;
 
+import com.smarthome.iot.service.validator.RegisterChecked;
+
+@RegisterChecked
 public class RegisterDTO {
     private String firstName;
     private String lastName;
