@@ -24,13 +24,13 @@ public class RoomController {
     public String getRoomPage(Model model){
         List<Room> rooms = this.roomService.getAllRoom();
         model.addAttribute("rooms", rooms);
-        return "/admin/room/show";
+        return "admin/room/show";
     }
 
     @GetMapping("/admin/room/create")
     public String getRoomCreatePage(Model model){
         model.addAttribute("newRoom", new Room());
-        return "/admin/room/create";
+        return "admin/room/create";
     }
 
     @PostMapping("/admin/room/create")

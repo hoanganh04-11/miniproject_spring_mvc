@@ -10,7 +10,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="" />
                 <meta name="author" content="" />
-                <title>Thêm cảm biến - IoT Smart Home</title>
+                <title>Thêm thiết bị - IoT Smart Home</title>
                 <link href="/css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -27,32 +27,37 @@
                     <div id="layoutSidenav_content">
                         <main>
                             <div class="container-fluid px-4">
-                                <h1 class="mt-4">Quản lý danh sách phòng</h1>
+                                <h1 class="mt-4">Quản lý danh sách thiết bị</h1>
                                 <ol class="breadcrumb mb-4">
                                     <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Rooms</li>
+                                    <li class="breadcrumb-item active">Devices</li>
                                 </ol>
                                 <div class="container mt-5">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mx-auto">
-                                            <h3>Thêm mới một phòng</h3>
+                                            <h3>Thêm mới một thiết bị</h3>
                                             <hr />
-                                            <form:form method="post" action="/admin/room/create"
-                                                modelAttribute="newRoom" class="row" enctype="multipart/form-data">
+                                            <form:form method="post" action="/admin/device/create"
+                                                modelAttribute="newDevice" class="row" enctype="multipart/form-data">
 
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <c:set var="errorName">
                                                         <form:errors path="name" cssClass="invalid-feedback" />
                                                     </c:set>
-                                                    <label class="form-label">Tên phòng:</label>
+                                                    <label class="form-label">Tên thiết bị:</label>
                                                     <form:input type="text"
                                                         class="form-control ${not empty errorName ? 'is-invalid' : ''}"
                                                         path="name" />
                                                     ${errorName}
                                                 </div>
 
-
-                                                
+                                                <div class="mb-3 col-12 col-md-6">
+                                                    <label class="form-label">Trạng thái:</label>
+                                                    <form:select class="form-select" path="status" required="required">
+                                                        <form:option value="ON">Đang hoạt động</form:option>
+                                                        <form:option value="OFF">Đang tắt</form:option>
+                                                    </form:select>
+                                                </div>
 
 
                                                 <div class="col-12 mb-5">

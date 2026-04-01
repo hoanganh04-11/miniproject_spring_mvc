@@ -53,11 +53,11 @@
                                                         <th>${room.id}</th>
                                                         <td>${room.name}</td>
                                                         <td>
-                                                            <a href="/admin/room/${sensor.id}"
+                                                            <a href="/admin/room/${room.id}"
                                                                 class="btn btn-success">View</a>
-                                                            <a href="/admin/room/update/${sensor.id}"
+                                                            <a href="/admin/room/update/${room.id}"
                                                                 class="btn btn-warning">Update</a>
-                                                            <a href="/admin/room/delete/${sensor.id}"
+                                                            <a href="/admin/room/delete/${room.id}"
                                                                 class="btn btn-danger">Delete</a>
                                                         </td>
                                                     </tr>
@@ -73,7 +73,9 @@
                             </div>
                         </div>
                     </main>
+
                     <jsp:include page="../layout/footer.jsp" />
+
                 </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
