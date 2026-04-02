@@ -72,7 +72,7 @@ public class SensorController {
         Sensor sensor = this.sensorService.findById(id);
         model.addAttribute("id", id);
         model.addAttribute("sensor", sensor);
-        return "/admin/sensor/detail";
+        return "admin/sensor/detail";
     }
 
     @GetMapping("/admin/sensor/update/{id}")
