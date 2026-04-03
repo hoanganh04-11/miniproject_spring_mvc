@@ -48,7 +48,7 @@
                                                             <form:input class="form-control ${not empty errorFirstName ? 'is-invalid' : ''}" type="text"
                                                                 placeholder="Enter your first name"
                                                                 path="firstName" />
-                                                            <label for="inputFirstName">First name</label>
+                                                            <label for="inputFirstName">Tên riêng</label>
                                                             ${errorFirstName}
                                                         </div>
                                                     </div>
@@ -58,7 +58,7 @@
                                                             <form:input class="form-control" type="text"
                                                                 placeholder="Enter your last name"
                                                                 path="lastName" />
-                                                            <label for="inputLastName">Last name</label>
+                                                            <label for="inputLastName">Họ</label>
                                                         </div>
                                                     </div>
 
@@ -68,7 +68,7 @@
                                                         placeholder="name@example.com"
                                                         path="email" />
                                                         ${errorEmail}
-                                                    <label>Email address</label>
+                                                    <label>Địa chỉ Email</label>
                                                 </div>
 
                                                 <div class="row mb-3">
@@ -77,7 +77,7 @@
                                                             <form:input class="form-control ${not empty errorPassword ? 'is-invalid' : ''}" type="password"
                                                                 placeholder="Create a password"
                                                                 path="password" />
-                                                            <label>Password</label>
+                                                            <label>Mật khẩu</label>
                                                             ${errorPassword}
                                                             <!-- <form:errors path="confirmPassword" /> -->
                                                         </div>
@@ -88,21 +88,21 @@
                                                             <form:input class="form-control" 
                                                                 type="password" placeholder="Confirm password" 
                                                                 path="confirmPassword"/>
-                                                            <label>Confirm Password</label>
+                                                            <label>Xác nhận mật khẩu</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="mt-4 mb-0">
                                                     <div class="d-grid">
-                                                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                                                        <button type="submit" class="btn btn-primary btn-block">Tạo tài khoản</button>
                                                     </div>
                                                 </div>
 
                                             </form:form>
                                         </div>
                                         <div class="card-footer text-center py-3">
-                                            <div class="small"><a href="/login">Have an account? Go to login</a></div>
+                                            <div class="small"><a href="/login">Đã có tài khoản ? Đăng nhập</a></div>
                                         </div>
                                     </div>
                                 </div>
