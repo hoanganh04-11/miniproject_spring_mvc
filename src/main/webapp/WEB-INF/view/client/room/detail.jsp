@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-4 text-md-end mt-3 mt-md-0">
             <a href="/client/room-list" class="btn btn-outline-secondary rounded-pill px-4">
-                <i class="bi bi-arrow-left me-2"></i> Quay lai
+                <i class="bi bi-arrow-left me-2"></i> Quay lại
             </a>
         </div>
     </div>
@@ -22,15 +22,15 @@
     <div class="mb-5">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h2 class="h4 fw-bold mb-0">
-                <i class="bi bi-plug-fill text-primary me-2"></i> Thiet bi dieu khien
+                <i class="bi bi-plug-fill text-primary me-2"></i> Thiết bị điều khiển
             </h2>
-            <span class="badge bg-primary rounded-pill px-3 py-2">${devices != null ? devices.size() : 0} thiet bi</span>
+            <span class="badge bg-primary rounded-pill px-3 py-2">${devices != null ? devices.size() : 0} thiết bị</span>
         </div>
 
         <c:if test="${empty devices}">
             <div class="alert alert-light border-0 shadow-sm rounded-4 p-4 text-center">
                 <i class="bi bi-info-circle fs-1 text-muted mb-3 d-block"></i>
-                <p class="text-muted mb-0">Phong nay hien chua duoc lap dat thiet bi dieu khien nao.</p>
+                <p class="text-muted mb-0">Phòng này hiện chưa được lắp đặt thiết bị điều khiển nào.</p>
             </div>
         </c:if>
 
@@ -68,14 +68,14 @@
     <div>
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h2 class="h4 fw-bold mb-0">
-                <i class="bi bi-thermometer-half text-success me-2"></i> Thong so cam bien
+                <i class="bi bi-thermometer-half text-success me-2"></i> Thông số cảm biến
             </h2>
         </div>
 
         <c:if test="${room.sensors == null || room.sensors.size() == 0}">
             <div class="alert alert-light border-0 shadow-sm rounded-4 p-4 text-center">
                 <i class="bi bi-cpu fs-1 text-muted mb-3 d-block"></i>
-                <p class="text-muted mb-0">Phong nay chua co cac mo-dun cam bien do luong.</p>
+                <p class="text-muted mb-0">Phòng này chưa có các mô-đun cảm biến đo lường.</p>
             </div>
         </c:if>
 
@@ -89,26 +89,26 @@
                                     <i class="bi bi-cpu text-success me-2"></i> ${sensor.name}
                                 </h5>
                                 <span class="badge ${sensor.status == 'ACTIVE' ? 'bg-success-light text-success' : 'bg-light text-muted'} rounded-pill px-3 py-2">
-                                    ${sensor.status == 'ACTIVE' ? 'Hoat dong' : 'Dang tat'}
+                                    ${sensor.status == 'ACTIVE' ? 'Hoạt động' : 'Đang tắt'}
                                 </span>
                             </div>
                             <div class="card-body p-4">
                                 <div class="row mb-4">
                                     <div class="col-6">
-                                        <p class="text-muted small mb-1">Loai cam bien</p>
+                                        <p class="text-muted small mb-1">Loại cảm biến</p>
                                         <span class="badge bg-info-light text-info rounded-pill px-3">${sensor.type}</span>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <p class="text-muted small mb-1">Nguong bao dong</p>
+                                        <p class="text-muted small mb-1">Ngưỡng báo động</p>
                                         <p class="fw-bold mb-0 text-dark">${sensor.threshold != null ? sensor.threshold : '---'}</p>
                                     </div>
                                 </div>
 
-                                <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">Du lieu moi nhat</h6>
+                                <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">Dữ liệu mới nhất</h6>
                                 <c:choose>
                                     <c:when test="${empty sensor.latestData}">
                                         <div class="text-center py-3 bg-light rounded-4">
-                                            <small class="text-muted fst-italic">Chua co du lieu tu phan cung</small>
+                                            <small class="text-muted fst-italic">Chưa có dữ liệu từ phần cứng</small>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
@@ -116,8 +116,8 @@
                                             <table class="table table-hover align-middle mb-0">
                                                 <thead class="table-light">
                                                     <tr class="small text-muted">
-                                                        <th>Gia tri</th>
-                                                        <th class="text-end">Thoi gian ghi nhan</th>
+                                                        <th>Giá trị</th>
+                                                        <th class="text-end">Thời gian ghi nhân</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -140,7 +140,7 @@
                             </div>
                             <div class="card-footer bg-white border-0 p-4 pt-0">
                                 <a href="/client/sensor/${sensor.id}" class="btn btn-sm btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-graph-up me-2"></i> Xem chi tiet bieu do
+                                    <i class="bi bi-graph-up me-2"></i> Xem chi tiết biểu đồ
                                 </a>
                             </div>
                         </div>
@@ -154,11 +154,12 @@
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
     <div id="toggleToast" class="toast align-items-center text-white border-0" role="alert">
         <div class="d-flex">
-            <div class="toast-body" id="toast-msg">Da cap nhat</div>
+            <div class="toast-body" id="toast-msg">Đã cập nhật</div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     </div>
 </div>
+
 <script>
     function handleToggle(btn) {
         const deviceId = btn.getAttribute('data-device-id');
