@@ -40,20 +40,22 @@
 
                                         <hr />
                                         <table class="table table-bordered table-hover">
-                                            <thread>
+                                            <thead>
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Tên</th>
                                                     <th>Trạng thái</th>
+                                                    <th>Phòng</th>
                                                     <th>Action</th>
                                                 </tr>
-                                            </thread>
+                                            </thead>
                                             <tbody>
                                                 <c:forEach var="device" items="${devices}">
                                                     <tr>
                                                         <th>${device.id}</th>
                                                         <td>${device.name}</td>
                                                         <td>${device.status}</td>
+                                                        <td>${device.room != null ? device.room.name : 'Chưa gán phòng'}</td>
                                                         <td>
                                                             <a href="/admin/device/${device.id}"
                                                                 class="btn btn-success">Xem chi tiết</a>

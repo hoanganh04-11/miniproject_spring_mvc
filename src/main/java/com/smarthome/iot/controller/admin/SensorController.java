@@ -41,6 +41,7 @@ public class SensorController {
     @GetMapping("/admin/sensor/create")
     public String getSensorCreatePage(Model model) {
         model.addAttribute("newSensor", new Sensor());
+        
         List<Room> rooms = this.roomService.getAllRoom();
         model.addAttribute("rooms", rooms);
 
