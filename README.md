@@ -1,17 +1,8 @@
 # HomeSmartIoT
 
-He thong nha thong minh xay dung bang Spring Boot + JSP + MySQL, ho tro quan ly phong/cam bien/thiet bi, phan quyen nguoi dung, va tich hop MQTT de nhan du lieu va dieu khien thiet bi theo thoi gian thuc.
+Hệ thống nhà thông minh xây dựng bằng **Spring Boot + JSP + MySQL**, hỗ trợ quản lý phòng/cảm biến/thiết bị, phân quyền người dùng và tích hợp **MQTT** để giao tiếp thiết bị IoT.
 
-## Tong quan
-
-Du an hien tai gom 2 phan chinh:
-
-- `Admin`: Quan tri du lieu he thong (user, room, sensor, device, dashboard).
-- `Client`: Giao dien nguoi dung de xem thong tin phong/cam bien/thiet bi, va dieu khien thiet bi neu da dang nhap.
-
-Ngoai ra, du an co cac REST API de test MQTT va dieu khien thiet bi qua endpoint API.
-
-## Cong nghe dang dung
+## 1) Công nghệ sử dụng
 
 - Java 17
 - Spring Boot 3.5.12
@@ -20,167 +11,153 @@ Ngoai ra, du an co cac REST API de test MQTT va dieu khien thiet bi qua endpoint
 - Spring Security
 - Spring Session JDBC
 - MySQL
-- MQTT client: Eclipse Paho (`org.eclipse.paho.client.mqttv3`)
+- MQTT client (Eclipse Paho)
 
-## Cau truc thu muc chinh
+## 2) Cấu trúc chính
 
 ```text
 src/main/java/com/smarthome/iot
-|- config/                 # Security, MQTT, MVC config
+|- config/            # Security, MQTT, WebMvc, SuccessHandler
 |- controller/
-|  |- admin/               # Controller trang quan tri
-|  |- client/              # Controller trang nguoi dung
-|  |- api/                 # REST API (MQTT, device)
-|- domain/                 # Entity JPA: User, Role, Room, Sensor, Device, SensorData, Alert
-|- repository/             # JPA repository
-|- service/                # Business logic
+|  |- admin/          # Trang quản trị
+|  |- client/         # Trang người dùng
+|  |- api/            # REST API (MQTT, device)
+|- domain/            # Entity: User, Role, Room, Sensor, Device, SensorData, Alert
+|- repository/        # JPA repositories
+|- service/           # Business logic
 
 src/main/webapp/WEB-INF/view
-|- admin/                  # JSP giao dien admin
-|- client/                 # JSP giao dien client
+|- admin/             # JSP admin
+|- client/            # JSP client
 
 src/main/resources
 |- application.properties
 ```
 
-## Tinh nang hien co
+## 3) Chức năng hiện có
 
-### Admin
+### Admin (`/admin/**`, role `ADMIN`)
 
-- Dang nhap vao khu vuc `/admin` voi role `ADMIN`
-- CRUD User: `/admin/user/**`
-- CRUD Room: `/admin/room/**`
-- CRUD Sensor: `/admin/sensor/**`
-- CRUD Device: `/admin/device/**`
-- Dashboard thong ke tong quan: `/admin`
+- Dashboard tổng quan
+- CRUD User
+- CRUD Room
+- CRUD Sensor
+- CRUD Device (đã hỗ trợ gán phòng cho device)
 
 ### Client
 
-- Trang chu: `/`
-- Dang ky: `/register`
-- Dang nhap: `/login`
-- Danh sach phong: `/client/room-list`
-- Chi tiet phong: `/client/room/{id}`
-- Danh sach cam bien: `/client/sensor-list`
-- Chi tiet cam bien: `/client/sensor/{id}`
-- Danh sach thiet bi: `/client/device`
+- Trang chủ: `/`
+- Đăng ký: `/register`
+- Đăng nhập: `/login`
+- Danh sách phòng: `/client/room-list`
+- Chi tiết phòng: `/client/room/{id}`
+- Danh sách cảm biến: `/client/sensor-list`
+- Chi tiết cảm biến: `/client/sensor/{id}`
+- Danh sách thiết bị: `/client/device`
 
-### Phan quyen client/guest
+### Phân quyền điều khiển thiết bị
 
-- Guest co the xem du lieu (`/client/**`).
-- Guest KHONG duoc dieu khien thiet bi.
-- API toggle thiet bi chi cho `USER`/`ADMIN`:
-  - `POST /client/device/{id}/toggle`
+- Guest: chỉ xem thông tin.
+- User/Admin: được bật/tắt thiết bị.
+- API điều khiển `POST /client/device/{id}/toggle` đã được chặn quyền ở backend (chỉ `USER`/`ADMIN`).
 
-## MQTT trong du an
+## 4) MQTT trong dự án
 
-Du an da co day du luong MQTT:
+### Thành phần MQTT
 
-- Cau hinh client va subscribe topic trong `MqttConfig`
-- Publish command trong `MqttService`
-- API test MQTT trong `MqttApiController`
-- Toggle device co publish MQTT command trong `DeviceService.toggleStatus(...)`
+- `MqttConfig`: tạo client, kết nối broker, subscribe các topic.
+- `MqttService`: publish command/payload.
+- `MqttTopicCatalogService`: catalog topic mẫu.
+- `MqttApiController`: API test MQTT.
+- `DeviceService.toggleStatus(...)`: vừa cập nhật DB vừa publish command MQTT.
 
-### Cac endpoint API MQTT
+### API MQTT test nhanh
 
-- `GET /api/v1/mqtt/status` - Kiem tra trang thai ket noi MQTT
-- `GET /api/v1/mqtt/topics` - Danh sach topic case mau
-- `POST /api/v1/mqtt/publish` - Publish topic/payload tuy y
-- `POST /api/v1/mqtt/device-command` - Publish lenh dieu khien theo `deviceId`
+- `GET /api/v1/mqtt/status` -> trạng thái kết nối MQTT
+- `GET /api/v1/mqtt/topics` -> danh sách topic mẫu
+- `POST /api/v1/mqtt/publish` -> publish thủ công
+- `POST /api/v1/mqtt/device-command` -> gửi lệnh theo `deviceId`
 
-### Device API
-
-- `POST /api/v1/device/{id}/toggle`
-
-## Cau hinh `application.properties`
+## 5) Cấu hình `application.properties`
 
 File: `src/main/resources/application.properties`
 
-Ban can kiem tra cac gia tri sau truoc khi chay:
-
-- MySQL
-  - `spring.datasource.url=jdbc:mysql://localhost:3306/smarthome`
-  - `spring.datasource.username=...`
-  - `spring.datasource.password=...`
-
-- MQTT
-  - `mqtt.enabled=true`
-  - `mqtt.broker.url=` **(bat buoc phai dien broker, neu de trong thi MQTT khong ket noi)**
-  - `mqtt.client.id=test`
-
-Vi du broker local:
+### Database
 
 ```properties
-mqtt.broker.url=tcp://localhost:1883
+spring.datasource.url=jdbc:mysql://localhost:3306/smarthome
+spring.datasource.username=root
+spring.datasource.password=123456
+spring.jpa.hibernate.ddl-auto=update
 ```
 
-## Khoi tao database
+### MQTT
 
-Tao DB truoc khi chay:
+```properties
+mqtt.enabled=true
+mqtt.broker.url=
+mqtt.client.id=test
+mqtt.username=
+mqtt.password=
+```
+
+Lưu ý:
+- `mqtt.broker.url` **bắt buộc** phải điền nếu muốn MQTT hoạt động.
+- Ví dụ local broker: `mqtt.broker.url=tcp://localhost:1883`
+
+## 6) Chuẩn bị dữ liệu ban đầu
+
+Tạo database:
 
 ```sql
 CREATE DATABASE smarthome CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-`spring.jpa.hibernate.ddl-auto=update` se tu tao/cap nhat schema theo entity.
+Ngoài ra cần có role trong bảng `roles`:
+- `ADMIN`
+- `USER`
 
-Luu y role:
+(đăng ký tài khoản mới hiện đang gán role `USER` trong `HomePageController`).
 
-- Dang ky nguoi dung moi gan role `USER` bang code (`getRoleByName("USER")`).
-- Can dam bao bang `roles` da co ban ghi `USER` va `ADMIN`.
+## 7) Cách chạy dự án
 
-## Huong dan chay du an
-
-### 1) Clone
-
-```bash
-git clone <repo-url>
-cd iot
-```
-
-### 2) Build
+### Build
 
 ```bash
 mvnw.cmd -DskipTests compile
 ```
 
-### 3) Run
+### Run
 
 ```bash
 mvnw.cmd spring-boot:run
 ```
 
-### 4) Truy cap
+### Truy cập
 
 - Client: `http://localhost:8080/`
 - Login: `http://localhost:8080/login`
 - Register: `http://localhost:8080/register`
 - Admin: `http://localhost:8080/admin`
 
-## Kiem tra nhanh MQTT sau khi chay
+## 8) Kiểm tra nhanh MQTT
 
-1. Kiem tra ket noi:
+1. Đảm bảo đã cấu hình `mqtt.broker.url`.
+2. Chạy app và gọi:
+   - `GET /api/v1/mqtt/status` (mong đợi `connected = true`)
+3. Gửi lệnh test:
+   - `POST /api/v1/mqtt/device-command?deviceId=1&command=ON`
+4. Kiểm tra log server để thấy dòng connect/subscribe/publish.
 
-```text
-GET /api/v1/mqtt/status
-```
+## 9) Lưu ý kỹ thuật
 
-2. Publish test:
+- App dùng `spring-session-jdbc`, có cấu hình `spring.session.jdbc.initialize-schema=always`.
+- Nếu MQTT không kết nối, app vẫn chạy bình thường (chỉ mất chức năng publish/subscribe MQTT).
+- Project hiện dùng JSP, không dùng Thymeleaf.
 
-```text
-POST /api/v1/mqtt/device-command?deviceId=1&command=ON
-```
+## 10) Định hướng phát triển
 
-3. Theo doi log server de thay thong diep `MQTT Connected`, `Subscribe`, `Publish`.
-
-## Luu y hien tai
-
-- Neu `mqtt.broker.url` de trong, app van chay binh thuong nhung bo qua ket noi MQTT.
-- Session dang dung `spring-session-jdbc`, app se tao bang session khi khoi dong (`spring.session.jdbc.initialize-schema=always`).
-
-## De xuat mo rong tiep
-
-- Them migration SQL (Flyway/Liquibase) thay cho `ddl-auto=update`.
-- Bo sung seed data role `USER/ADMIN` tu dong khi khoi dong.
-- Them test integration cho MQTT va security.
-- Them dashboard realtime cho client.
+- Seed dữ liệu role/user mặc định tự động khi khởi động.
+- Viết test integration cho security và MQTT.
+- Bổ sung dashboard realtime và lịch sử biểu đồ dữ liệu cảm biến.
+- Cấu hình profile riêng cho môi trường dev/staging/prod.
