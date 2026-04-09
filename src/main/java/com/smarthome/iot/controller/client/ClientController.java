@@ -52,9 +52,8 @@ public class ClientController {
 
         if (room != null && room.getSensors() != null) {
             for (Sensor sensor : room.getSensors()) {
-                // Service đánh dấu sẵn data nào vượt ngưỡng → View chỉ cần đọc
                 List<SensorData> latestData = this.sensorDataService
-                        .getLatestDataWithThreshold(sensor.getId(), sensor.getThreshold());
+                        .getLatestData(sensor.getId());
                 sensor.setLatestData(latestData);
             }
         }
@@ -76,10 +75,7 @@ public class ClientController {
     @GetMapping("/client/sensor/{id}")
     public String getSensorDetail(Model model, @PathVariable Long id) {
         Sensor sensor = this.sensorService.findById(id);
-        // Service đánh dấu sẵn data nào vượt ngưỡng → View chỉ cần đọc
-        List<SensorData> sensorDataList = (sensor != null)
-                ? this.sensorDataService.getLatestDataWithThreshold(id, sensor.getThreshold())
-                : this.sensorDataService.getLatestData(id);
+        List<SensorData> sensorDataList = this.sensorDataService.getLatestData(id);
 
         model.addAttribute("sensor", sensor);
         model.addAttribute("dataList", sensorDataList);

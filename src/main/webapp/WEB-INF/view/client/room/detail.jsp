@@ -140,9 +140,6 @@
                                                         <tr>
                                                             <td class="fw-bold text-dark fs-5">
                                                                 ${data.value}
-                                                                <c:if test="${data.aboveThreshold}">
-                                                                    <span class="badge bg-danger ms-1" title="Vuot nguong">!</span>
-                                                                </c:if>
                                                             </td>
                                                             <td class="text-end text-muted small">${data.recordedAt}</td>
                                                         </tr>

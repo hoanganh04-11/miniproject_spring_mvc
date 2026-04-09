@@ -32,10 +32,6 @@ public class SensorData {
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
-    // Được Service set: true nếu value vượt ngưỡng của sensor
-    @Transient
-    private boolean aboveThreshold;
-
     @PrePersist
     public void prePersist() {
         this.recordedAt = LocalDateTime.now();
@@ -72,14 +68,6 @@ public class SensorData {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
-    }
-
-    public boolean isAboveThreshold() {
-        return aboveThreshold;
-    }
-
-    public void setAboveThreshold(boolean aboveThreshold) {
-        this.aboveThreshold = aboveThreshold;
     }
 
     @Override

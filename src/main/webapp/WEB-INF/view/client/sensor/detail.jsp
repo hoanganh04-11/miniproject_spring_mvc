@@ -101,11 +101,6 @@
                                                         <span class="h4 fw-bold text-dark mb-0">
                                                             ${data.value}
                                                         </span>
-                                                        <c:if test="${data.aboveThreshold}">
-                                                            <span class="badge bg-danger ms-2 pulse-badge"><i
-                                                                    class="bi bi-exclamation-triangle-fill"></i> Cảnh
-                                                                báo Vượt ngưỡng</span>
-                                                        </c:if>
                                                     </td>
                                                     <td class="text-end pe-4 text-muted">${data.recordedAt}</td>
                                                 </tr>

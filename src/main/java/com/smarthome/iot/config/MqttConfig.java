@@ -46,23 +46,8 @@ public class MqttConfig {
     @Value("${mqtt.topic.sensor.data:smarthome/sensor/+/data}")
     private String sensorDataTopic;
 
-    @Value("${mqtt.topic.device.availability:smarthome/device/+/availability}")
-    private String availabilityTopic;
-
-    @Value("${mqtt.topic.device.command.ack:smarthome/device/+/command/ack}")
-    private String commandAckTopic;
-
-    @Value("${mqtt.topic.device.command.error:smarthome/device/+/command/error}")
-    private String commandErrorTopic;
-
-    @Value("${mqtt.topic.device.telemetry:smarthome/device/+/telemetry}")
-    private String deviceTelemetryTopic;
-
     @Value("${mqtt.topic.sensor.alert:smarthome/sensor/+/alert}")
     private String sensorAlertTopic;
-
-    @Value("${mqtt.topic.system.heartbeat:smarthome/system/+/heartbeat}")
-    private String heartbeatTopic;
 
     @Bean
     public MqttClient mqttClient(ApplicationContext ctx) {
@@ -116,12 +101,7 @@ public class MqttConfig {
             Set<String> subscriptions = new LinkedHashSet<>();
             subscriptions.add(statusTopic);
             subscriptions.add(sensorDataTopic);
-            subscriptions.add(availabilityTopic);
-            subscriptions.add(commandAckTopic);
-            subscriptions.add(commandErrorTopic);
-            subscriptions.add(deviceTelemetryTopic);
             subscriptions.add(sensorAlertTopic);
-            subscriptions.add(heartbeatTopic);
 
             for (String topic : subscriptions) {
                 if (topic != null && !topic.isBlank()) {
@@ -156,11 +136,6 @@ public class MqttConfig {
             return;
         }
 
-        if ("system".equals(parts[1]) && "heartbeat".equals(parts[3])) {
-            System.out.println(">>> MQTT: Heartbeat node=" + parts[2] + " payload=" + payload);
-            return;
-        }
-
         System.err.println(">>> MQTT: Unhandled topic: " + topic);
     }
 
@@ -179,31 +154,6 @@ public class MqttConfig {
         if ("status".equals(parts[3])) {
             deviceService.updateStatus(deviceId, payload);
             return;
-        }
-
-        if ("availability".equals(parts[3])) {
-            System.out.println(">>> MQTT: Device " + deviceId + " availability=" + payload);
-            return;
-        }
-
-        if ("telemetry".equals(parts[3])) {
-            System.out.println(">>> MQTT: Device telemetry id=" + deviceId + " data=" + payload);
-            return;
-        }
-
-        if (parts.length == 5 && "command".equals(parts[3])) {
-            if ("ack".equals(parts[4])) {
-                String ackStatus = extractField(payload, "status");
-                if (ackStatus != null && !ackStatus.isBlank()) {
-                    deviceService.updateStatus(deviceId, ackStatus);
-                }
-                System.out.println(">>> MQTT: Device command ACK id=" + deviceId + " payload=" + payload);
-                return;
-            }
-            if ("error".equals(parts[4])) {
-                System.err.println(">>> MQTT: Device command ERROR id=" + deviceId + " payload=" + payload);
-                return;
-            }
         }
 
         System.err.println(">>> MQTT: Unhandled device topic: " + fullTopic);
@@ -259,7 +209,6 @@ public class MqttConfig {
                     return;
                 }
 
-                String unit = data.getOrDefault("unit", "").toString();
                 service.saveData(sensorId, value);
                 System.out.println(">>> MQTT: Sensor " + sensorId + " -> value=" + value);
                 return;
@@ -282,21 +231,6 @@ public class MqttConfig {
         try {
             return Double.parseDouble(value);
         } catch (NumberFormatException ex) {
-            return null;
-        }
-    }
-
-    private String extractField(String payload, String fieldName) {
-        try {
-            if (!payload.startsWith("{")) {
-                return null;
-            }
-
-            Map<String, Object> data = OBJECT_MAPPER.readValue(payload, new TypeReference<Map<String, Object>>() {
-            });
-            Object value = data.get(fieldName);
-            return value != null ? value.toString() : null;
-        } catch (Exception ex) {
             return null;
         }
     }
