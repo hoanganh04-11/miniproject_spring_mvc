@@ -52,8 +52,7 @@ public class ClientController {
 
         if (room != null && room.getSensors() != null) {
             for (Sensor sensor : room.getSensors()) {
-                List<SensorData> latestData = this.sensorDataService
-                        .getLatestData(sensor.getId());
+                List<SensorData> latestData = this.sensorDataService.getLatestData(sensor.getId());
                 sensor.setLatestData(latestData);
             }
         }
