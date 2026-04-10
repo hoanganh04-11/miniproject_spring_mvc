@@ -31,17 +31,6 @@ public class MqttService {
         }
     }
 
-    public void publishCommandJson(Long deviceId, String command) {
-        String payload = "{\"command\":\"" + command + "\",\"source\":\"server\",\"requestedAt\":\"" + Instant.now()
-                + "\"}";
-        try {
-            String topic = String.format(commandTopicTemplate, deviceId);
-            publish(topic, payload, 1, false);
-        } catch (MqttException e) {
-            System.err.println(">>> MQTT publish json loi: " + e.getMessage());
-        }
-    }
-
     public String getCommandTopicTemplate() {
         return commandTopicTemplate;
     }

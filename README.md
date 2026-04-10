@@ -96,6 +96,17 @@ Dự án hiện tại tập trung vào nền tảng web:
 
 ---
 
+## 📡 Danh sách MQTT Topics (Catalog)
+
+Dưới đây là danh sách các topic đang được sử dụng để giao tiếp giữa Server và ESP32 qua MQTT:
+
+| Chức năng | Luồng dữ liệu | Topic Pattern | Payload mẫu | Ý nghĩa | QoS |
+|---|---|---|---|---|---|
+| **Device Command** | Server &rarr; ESP32 | `smarthome/device/{id}/command` | `"ON"` hoặc `"OFF"` | Lệnh điều khiển rơ-le/thiết bị từ Server gửi xuống ESP32. | 1 |
+| **Device Status** | ESP32 &rarr; Server | `smarthome/device/+/status` | `"ON"` hoặc `"OFF"` | Trạng thái thực tế trả về sau khi ESP32 xử lý lệnh phần cứng thành công. | 1 |
+| **Sensor Data** | ESP32 &rarr; Server | `smarthome/sensor/+/data` | `{"value":28.5}` hoặc `"28.5"` | Dữ liệu đo định kì của cảm biến. | 1 |
+| **Sensor Alert** | ESP32 &rarr; Server | `smarthome/sensor/+/alert` | `1` (Nguy hiểm) hoặc `0` (An toàn) | Tín hiệu cảnh báo khi giá trị đọc vượt ngưỡng an toàn quy định. | 1 |
+
 ## 📦 Công nghệ sử dụng
 
 | Công nghệ | Vai trò |

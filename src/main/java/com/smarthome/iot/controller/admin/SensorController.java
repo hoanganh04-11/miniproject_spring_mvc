@@ -93,7 +93,6 @@ public class SensorController {
         if(currentSensor != null){
             currentSensor.setName(sensor.getName());
             currentSensor.setType(sensor.getType());
-            currentSensor.setThreshold(sensor.getThreshold());
             currentSensor.setStatus(sensor.getStatus());
 
             List<Room> rooms = this.roomService.getAllRoom();
