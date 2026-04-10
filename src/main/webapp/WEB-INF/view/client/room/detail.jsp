@@ -147,7 +147,7 @@
                                                             <td class="fw-bold text-dark fs-5">
                                                                 ${data.value}
                                                             </td>
-                                                            <td class="text-end text-muted small">${data.recordedAt}</td>
+                                                            <td class="text-end text-muted small">${data.formattedRecordedAt}</td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>

@@ -102,7 +102,60 @@
                                                             ${data.value}
                                                         </span>
                                                     </td>
-                                                    <td class="text-end pe-4 text-muted">${data.recordedAt}</td>
+                                                    <td class="text-end pe-4 text-muted">${data.formattedRecordedAt}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </c:if>
+                    </div>
+                    
+                    <!-- Alert Table Card -->
+                    <div class="card border-0 shadow-sm rounded-4 mt-4 overflow-hidden">
+                        <div class="card-header bg-danger text-white border-0 py-4 px-4 d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Lịch sử sự cố / Cảnh báo</h4>
+                            <span class="badge bg-white text-danger rounded-pill px-3 py-2">${alertCount} sự cố</span>
+                        </div>
+                        <div class="card-body p-0">
+                            <c:if test="${empty alertList}">
+                                <div class="text-center py-5">
+                                    <i class="bi bi-shield-check fs-1 text-success d-block mb-3"></i>
+                                    <p class="text-muted">Hệ thống an toàn. Chưa có sự cố nào được ghi nhận.</p>
+                                </div>
+                            </c:if>
+                            <c:if test="${not empty alertList}">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="bg-light">
+                                            <tr class="text-muted small text-uppercase">
+                                                <th class="ps-4">Thông điệp</th>
+                                                <th>Mức độ an toàn</th>
+                                                <th class="text-end pe-4">Thời gian ghi nhận</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="alert" items="${alertList}">
+                                                <tr>
+                                                    <td class="ps-4 fw-bold text-dark">
+                                                        <c:choose>
+                                                            <c:when test="${alert.alert}">
+                                                                <span class="text-danger"><i class="bi bi-exclamation-circle-fill me-2"></i>${alert.alertMessage}</span>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="text-success"><i class="bi bi-check-circle-fill me-2"></i>${alert.alertMessage}</span>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:if test="${alert.value != null}">
+                                                            <span class="badge ${alert.alert ? 'bg-danger' : 'bg-success'} rounded-pill">
+                                                                ${alert.value}
+                                                            </span>
+                                                        </c:if>
+                                                        <c:if test="${alert.value == null}">---</c:if>
+                                                    </td>
+                                                    <td class="text-end pe-4 text-muted">${alert.formattedRecordedAt}</td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

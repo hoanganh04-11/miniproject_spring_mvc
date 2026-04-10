@@ -74,12 +74,19 @@ public class ClientController {
     @GetMapping("/client/sensor/{id}")
     public String getSensorDetail(Model model, @PathVariable Long id) {
         Sensor sensor = this.sensorService.findById(id);
-        List<SensorData> sensorDataList = this.sensorDataService.getLatestData(id);
+        
+        // 1. Dữ liệu đo lường định kỳ
+        List<SensorData> normalDataList = this.sensorDataService.getTop10NormalDataBySensor(id);
+        // 2. Lịch sử cảnh báo
+        List<SensorData> alertList = this.sensorDataService.getAlertsBySensor(id);
 
         model.addAttribute("sensor", sensor);
-        model.addAttribute("dataList", sensorDataList);
-        // Truyền đếm sẵn → View không cần gọi .size()
-        model.addAttribute("dataCount", sensorDataList.size());
+        model.addAttribute("dataList", normalDataList);
+        model.addAttribute("dataCount", normalDataList.size());
+        
+        model.addAttribute("alertList", alertList);
+        model.addAttribute("alertCount", alertList.size());
+        
         return "client/sensor/detail";
     }
 

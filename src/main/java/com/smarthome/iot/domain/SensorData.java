@@ -1,7 +1,7 @@
 package com.smarthome.iot.domain;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,13 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.persistence.Lob;
 
 @Entity
 @Table(name = "sensor_data")
 public class SensorData {
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +38,18 @@ public class SensorData {
 
     @PrePersist
     public void prePersist() {
-        this.recordedAt = LocalDateTime.now();
+        if (this.recordedAt == null) {
+            this.recordedAt = LocalDateTime.now();
+        }
     }
 
-    // Getters and Setters
+    // Phương thức giúp hiển thị dateTime theo chuẩn ở JSP
+    public String getFormattedRecordedAt() {
+        if (this.recordedAt == null) return "---";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
+        return this.recordedAt.format(formatter);
+    }
+
     public Long getId() {
         return id;
     }
@@ -97,7 +102,4 @@ public class SensorData {
     public String toString() {
         return "SensorData [id=" + id + ", value=" + value + ", recordedAt=" + recordedAt + "]";
     }
-
-
-    
 }

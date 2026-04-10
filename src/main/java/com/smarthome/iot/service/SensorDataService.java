@@ -47,6 +47,13 @@ public class SensorDataService {
     }
 
     /**
+     * Lấy 10 bản ghi đo lường thông thường (không phải cảnh báo) của 1 sensor
+     */
+    public List<SensorData> getTop10NormalDataBySensor(Long sensorId) {
+        return this.sensorDataRepository.findTop10BySensorIdAndIsAlertFalseOrderByRecordedAtDesc(sensorId);
+    }
+
+    /**
      * Lấy tất cả dữ liệu theo sensor
      */
     public List<SensorData> getAllDataBySensor(Long sensorId) {

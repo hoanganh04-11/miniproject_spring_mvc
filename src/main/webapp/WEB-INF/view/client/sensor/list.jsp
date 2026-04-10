@@ -62,7 +62,7 @@
                                             <div class="d-flex align-items-baseline gap-2">
                                                 <span
                                                     class="display-6 fw-bold text-primary">${sensor.latestData[0].value}</span>
-                                                <small class="text-muted">${sensor.latestData[0].recordedAt}</small>
+                                                <small class="text-muted">${sensor.latestData[0].formattedRecordedAt}</small>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
