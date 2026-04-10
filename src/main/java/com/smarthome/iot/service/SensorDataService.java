@@ -39,31 +39,27 @@ public class SensorDataService {
         return this.sensorDataRepository.save(data);
     }
 
-    /**
-     * Lấy 10 bản ghi mới nhất của 1 sensor
-     */
+    // Lấy 10 bản ghi mới nhất của 1 sensor
+    
     public List<SensorData> getLatestData(Long sensorId) {
         return this.sensorDataRepository.findTop10BySensorIdOrderByRecordedAtDesc(sensorId);
     }
 
-    /**
-     * Lấy 10 bản ghi đo lường thông thường (không phải cảnh báo) của 1 sensor
-     */
+    
+    // Lấy 10 bản ghi đo lường thông thường (không phải cảnh báo) của 1 sensor
+    
     public List<SensorData> getTop10NormalDataBySensor(Long sensorId) {
         return this.sensorDataRepository.findTop10BySensorIdAndIsAlertFalseOrderByRecordedAtDesc(sensorId);
     }
 
-    /**
-     * Lấy tất cả dữ liệu theo sensor
-     */
+    // Lấy tất cả dữ liệu theo sensor
     public List<SensorData> getAllDataBySensor(Long sensorId) {
         return this.sensorDataRepository.findBySensorIdOrderByRecordedAtDesc(sensorId);
     }
 
-    /**
-     * Lưu bản tin cảnh báo vượt ngưỡng từ ESP32.
-     * Tái sử dụng bảng sensor_data với cờ isAlert.
-     */
+    
+    // Lưu bản tin cảnh báo vượt ngưỡng từ ESP32, Tái sử dụng bảng sensor_data với cờ isAlert.
+    
     public SensorData saveAlert(Long sensorId, boolean isAlert, String message, Double value) {
         Sensor sensor = this.sensorRepository.findById(sensorId).orElse(null);
         if (sensor == null) {
@@ -79,16 +75,12 @@ public class SensorDataService {
         return this.sensorDataRepository.save(data);
     }
 
-    /**
-     * Lấy tất cả cảnh báo, mới nhất trước
-     */
+    // Lấy tất cả cảnh báo, mới nhất trước
     public List<SensorData> getAllAlerts() {
         return this.sensorDataRepository.findByIsAlertTrueOrderByRecordedAtDesc();
     }
 
-    /**
-     * Lấy cảnh báo theo sensor
-     */
+    // Lấy cảnh báo theo cảm biến
     public List<SensorData> getAlertsBySensor(Long sensorId) {
         return this.sensorDataRepository.findBySensorIdAndIsAlertTrueOrderByRecordedAtDesc(sensorId);
     }
