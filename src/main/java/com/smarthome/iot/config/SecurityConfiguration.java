@@ -76,6 +76,7 @@ public class SecurityConfiguration {
 
      @Bean 
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+        //v6 lambda
         http 
                 .authorizeHttpRequests(authorize -> authorize 
                         .dispatcherTypeMatchers(DispatcherType.FORWARD,

@@ -23,8 +23,7 @@ public class SensorDataService {
     }
 
     /**
-     * Lưu dữ liệu từ ESP32.
-     * ESP32 gửi sensorId, value, unit → Service tìm Sensor rồi lưu SensorData.
+     * Lưu dữ liệu từ ESP32 gửi sensorId, value → Service tìm Sensor rồi lưu SensorData.
      */
     public SensorData saveData(Long sensorId, Double value) {
         Sensor sensor = this.sensorRepository.findById(sensorId).orElse(null);
@@ -46,7 +45,7 @@ public class SensorDataService {
     }
 
     
-    // Lấy 10 bản ghi đo lường thông thường (không phải cảnh báo) của 1 sensor
+    // Lấy 10 bản ghi đo lường thông thường của 1 sensor
     
     public List<SensorData> getTop10NormalDataBySensor(Long sensorId) {
         return this.sensorDataRepository.findTop10BySensorIdAndIsAlertFalseOrderByRecordedAtDesc(sensorId);
@@ -80,8 +79,8 @@ public class SensorDataService {
         return this.sensorDataRepository.findByIsAlertTrueOrderByRecordedAtDesc();
     }
 
-    // Lấy cảnh báo theo cảm biến
+    // Lấy 10 cảnh báo gần nhất theo cảm biến
     public List<SensorData> getAlertsBySensor(Long sensorId) {
-        return this.sensorDataRepository.findBySensorIdAndIsAlertTrueOrderByRecordedAtDesc(sensorId);
+        return this.sensorDataRepository.findTop10BySensorIdAndIsAlertTrueOrderByRecordedAtDesc(sensorId);
     }
 }

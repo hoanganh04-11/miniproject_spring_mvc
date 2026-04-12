@@ -5,7 +5,7 @@
             <jsp:param name="title" value="${sensor.name} - Chi tiết - SmartHome IoT" />
         </jsp:include>
 
-        <div class="container py-5 mt-5">
+        <div class="container py-5 mt-5 mb-5">
             <div class="row align-items-center mb-5 pb-3 border-bottom">
                 <div class="col-md-8">
                     <nav aria-label="breadcrumb">
@@ -31,7 +31,7 @@
             <div class="row g-4">
                 <!-- Sensor Info Card -->
                 <div class="col-lg-4">
-                    <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                         <div class="card-header bg-success text-white py-4 px-4 text-center">
                             <div class="icon-circle bg-white-transparent rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
                                 style="width: 80px; height: 80px;">
@@ -69,7 +69,7 @@
 
                 <!-- Data Table Card -->
                 <div class="col-lg-8">
-                    <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                         <div
                             class="card-header bg-white border-0 py-4 px-4 d-flex justify-content-between align-items-center">
                             <h4 class="mb-0 fw-bold">Lịch sử dữ liệu đo lường</h4>
@@ -109,6 +109,7 @@
                                     </table>
                                 </div>
                             </c:if>
+                        </div>
                     </div>
                     
                     <!-- Alert Table Card -->

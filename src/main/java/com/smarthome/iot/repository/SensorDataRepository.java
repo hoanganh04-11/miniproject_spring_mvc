@@ -11,10 +11,10 @@ import com.smarthome.iot.domain.SensorData;
 public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
     
 
-    //Lấy dữ liệu theo cảm biến (sensor), sắp xếp mới nhất trước
+    //Lấy dữ liệu theo cảm biến, sắp xếp mới nhất trước
     List<SensorData> findBySensorIdOrderByRecordedAtDesc(Long sensorId);
 
-    //Lấy N bản ghi mới nhất theo sensor
+    //Lấy 10 bản ghi mới nhất theo sensor
     List<SensorData> findTop10BySensorIdOrderByRecordedAtDesc(Long sensorId);
 
     //Tổng bản ghi theo cảm biến
@@ -23,9 +23,9 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
     // Lấy tất cả cảnh báo, mới nhất trước
     List<SensorData> findByIsAlertTrueOrderByRecordedAtDesc();
 
-    // Lấy cảnh báo theo sensor, mới nhất trước
-    List<SensorData> findBySensorIdAndIsAlertTrueOrderByRecordedAtDesc(Long sensorId);
+    // Lấy 10 cảnh báo gần nhất theo sensor, mới nhất trước
+    List<SensorData> findTop10BySensorIdAndIsAlertTrueOrderByRecordedAtDesc(Long sensorId);
 
-    // Lấy 10 bản ghi dữ liệu thường (không phải cảnh báo) theo sensor
+    // Lấy 10 bản ghi dữ liệu thường theo sensor
     List<SensorData> findTop10BySensorIdAndIsAlertFalseOrderByRecordedAtDesc(Long sensorId);
 }

@@ -33,9 +33,6 @@ public class Sensor {
     @NotEmpty(message = "Loại cảm biến không được để trống")
     private String type;
 
-
-
-
     @NotNull
     @NotEmpty(message = "Trạng thái không được để trống")
     private String status;

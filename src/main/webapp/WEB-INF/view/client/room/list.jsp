@@ -7,7 +7,7 @@
 
         <div class="container py-5 mt-5">
             <div class="text-center mx-auto mb-5" style="max-width: 700px;">
-                <h1 class="display-4 fw-bold">Danh sách Phòng</h1>
+                <h1 class="display-4 fw-bold">Danh sách phòng</h1>
                 <p class="text-muted">Lựa chọn phòng để xem chi tiết các thông số cảm biến và điều khiển thiết bị liên
                     quan.</p>
             </div>
@@ -73,7 +73,7 @@
                 </c:forEach>
             </div>
         </div>
-<style>
+        <style>
             .bg-success-light {
                 background-color: #e9f7ef;
             }
@@ -94,5 +94,4 @@
             }
         </style>
 
-<jsp:include page="/WEB-INF/view/client/layout/footer.jsp" />
-
+        <jsp:include page="/WEB-INF/view/client/layout/footer.jsp" />
