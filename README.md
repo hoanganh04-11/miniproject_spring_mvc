@@ -206,8 +206,7 @@ CREATE DATABASE smarthome CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 - `sensors`
 - `sensor_data`
 - `devices`
-- `alerts`
-- `spring_session`, `spring_session_attributes`
+
 
 ### Quan hệ dữ liệu cơ bản
 
@@ -216,7 +215,6 @@ roles 1 --- n users
 rooms 1 --- n sensors
 rooms 1 --- n devices
 sensors 1 --- n sensor_data
-sensors 1 --- n alerts
 ```
 
 ---
