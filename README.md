@@ -260,13 +260,22 @@ HomeSmartIoT/
 
 ## 🔌 Chức năng phần cứng
 
-> Phần firmware hiện không nằm trong repo này, nhưng backend đã sẵn sàng để tích hợp.
+> Firmware đã có trong repo tại `embedded/stm32-node` (STM32CubeMX + HAL), sẵn sàng build/nạp và tích hợp trực tiếp với Gateway ESP32.
 
 
 ### Node cảm biến (STM32)
 
-- Đọc dữ liệu cảm biến (nhiệt độ/độ ẩm/khí gas/ánh sáng...)
-- Truyền dữ liệu theo khung qua Gateway Esp32 bằng LoRa
+- Dùng `STM32F103` với kiến trúc state machine để chạy vòng lặp ổn định, không block.
+- Đọc cảm biến định kỳ:
+  - DHT11 x2 (nhiệt độ/độ ẩm, lấy giá trị trung bình nếu đọc hợp lệ)
+  - MQ2 (gas) và LDR (ánh sáng) qua ADC, có lọc trung bình nhiều mẫu
+- Điều khiển 2 relay + còi cảnh báo với 2 chế độ:
+  - `AUTO`: tự động bật/tắt relay theo ngưỡng MQ2/LDR (có hysteresis chống nhấp nháy)
+  - `MANUAL`: bật/tắt relay bằng nút nhấn hoặc lệnh điều khiển từ Gateway
+- Hiển thị thông tin sensor, trạng thái relay và mode trên LCD I2C 16x2.
+- Gửi telemetry qua LoRa theo chu kỳ (mặc định 10s/lần) hoặc gửi ngay khi giữ nút view.
+- Gói dữ liệu theo frame nhị phân có `start byte`, `payload`, `XOR checksum`, `end byte` để tăng độ tin cậy truyền nhận.
+- Hỗ trợ nhận frame điều khiển ngược từ Gateway (qua UART-LoRa), kiểm tra checksum trước khi áp dụng lệnh.
 
 ### Gateway (ESP32)
 
